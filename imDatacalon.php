@@ -20,8 +20,17 @@ include "function.php";
     move_uploaded_file($_FILES['filecalon']['tmp_name'],$target_dir);
   
     $Reader = new SpreadsheetReader($target_dir);
-    
-  
+    //Standar Deviasi Penghasilan
+    $penghasilan_tampil = penghasilan_tampil_layak();
+    $penghasilan_tampil2 = penghasilan_tampil_tidak();
+    $penghasilan_numerik = penghasilan_sum_layak();
+    $penghasilan_numerik2 = penghasilan_sum_tidak();
+
+    //Standar Deviasi ART
+    $tampil = tampil_layak();//var_dump($tampil);
+    $tampil2 = tampil_tidak();
+    $numerik = sum_layak(); //var_dump($numerik);
+    $numerik2 = sum_tidak();
     foreach ($Reader as $Key => $Row)
     {
       // import data excel mulai baris ke-2 (karena ada header pada baris 1)
@@ -31,18 +40,12 @@ include "function.php";
   
       if ($query) {  
         $ok = mysqli_insert_id($host);//var_dump($ok);
-        $penghasilan_tampil = penghasilan_tampil_layak();
-        $penghasilan_tampil2 = penghasilan_tampil_tidak();
-        $penghasilan_numerik = penghasilan_sum_layak();
-        $penghasilan_numerik2 = penghasilan_sum_tidak();
+        
         $prob_penghasilan_layak = 1 / sqrt(2*3.14*$penghasilan_numerik)*exp(-(($Row[5]-penghasilan_mean_layak())**2)/($penghasilan_numerik**2));
         $prob_penghasilan_tidak = 1 / sqrt(2*3.14*$penghasilan_numerik2)*exp(-(($Row[5]-penghasilan_mean_tidak())**2)/($penghasilan_numerik2**2));
         //var_dump(penghasilan_mean_layak());
         //var_dump(penghasilan_mean_tidak());
-        $tampil = tampil_layak();//var_dump($tampil);
-        $tampil2 = tampil_tidak();
-        $numerik = sum_layak(); //var_dump($numerik);
-        $numerik2 = sum_tidak();
+        
         $prob_art_layak = 1 / sqrt(2*3.14*$numerik)*exp(-(($Row[6]-mean_layak())**2)/($numerik**2));
         $prob_art_tdk = 1 / sqrt(2*3.14*$numerik2)*exp(-(($Row[6]-mean_tidak())**2)/($numerik2**2));
 

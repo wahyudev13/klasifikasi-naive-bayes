@@ -158,14 +158,14 @@ $c = array("jenis_pkj","pengeluaran","status_tmpt");
                     <td><?= $no++ ?></td>
                     <td><?= $key[0] ?></td>
                     <?php 
-                    $selisih =  $key[0] - $mean;
+                    $selisih1 =  $key[0] - $mean;
                     ?>      
-                    <td><?= $selisih; ?></td>        
+                    <td><?= $selisih1; ?></td>        
                     <?php 
-                    $pow =  pow($selisih,2);
-                    $var_pow2[] =  pow($selisih,2);
+                    $pow1 =  pow($selisih1,2);
+                    $var_pow2[] =  pow($selisih1,2);
                     ?>    
-                    <td><?= $pow; ?></td>        
+                    <td><?= $pow1; ?></td>        
                   </tr>
                   <?php }?>
                   
@@ -251,7 +251,7 @@ $c = array("jenis_pkj","pengeluaran","status_tmpt");
                   
                 </table>
 
-
+          <!-- probabilitas ART -->
                 <table style="margin-top:20px" class="table table-bordered">
                   <tr  style="background-color:#007bff57">
                       <th colspan="4" class=" text-center">Perhitungan Mean dan Standar Deviasi ART</th>
@@ -264,19 +264,19 @@ $c = array("jenis_pkj","pengeluaran","status_tmpt");
                   </tr>
                   <?php
                   $no = 1;
-                  $mean = a('layak') / total('layak');
-                  foreach (numerik_layak() as $key ) {
+                  $mean3 = a('layak') / total('layak');
+                  foreach (numerik_layak() as $key3 ) {
                   ?>
                   <tr>
                     <td><?= $no++ ?></td>
-                    <td><?= $key[0] ?></td>
+                    <td><?= $key3[0] ?></td>
                     <?php 
-                    $selisih =  $key[0] - $mean;
+                    $selisih3 =  $key3[0] - $mean3;
                     ?>      
-                    <td><?= $selisih; ?></td>        
+                    <td><?= $selisih3; ?></td>        
                     <?php 
-                    $pow =  pow($selisih,2);
-                    $var_pow2[] =  pow($selisih,2);
+                    $pow =  pow($selisih3,2);
+                    $var_pow3[] =  pow($selisih3,2);
                     ?>    
                     <td><?= $pow; ?></td>        
                   </tr>
@@ -284,27 +284,27 @@ $c = array("jenis_pkj","pengeluaran","status_tmpt");
                   
                   <?php 
 
-                  $jumlah_pow = array_sum($var_pow2); 
+                  $jumlah_pow3 = array_sum($var_pow3); 
                   
                   ?>
                   <tr style="background-color:#c1c1c1">
                      <td><b>Total</b></td>
                      <td><?php echo a('layak');  ?></td>  
                      <td></td>
-                     <td><?php echo $jumlah_pow;  ?></td>  
+                     <td><?php echo $jumlah_pow3;  ?></td>  
                   </tr>
                   <tr style="background-color:#c1c1c1">
                      <td><b>Mean <br>(Jumlah Item / Jumlah Total )</b></td>
-                     <td><?php echo $mean;  ?></td>  
+                     <td><?php echo $mean3;  ?></td>  
                        
                   </tr>
                   <?php
-                  $strd_dev = sqrt($jumlah_pow / (total('layak')-1));
+                  $strd_dev3 = sqrt($jumlah_pow3 / (total('layak')-1));
                   ?>
                   <tr style="background-color:#c1c1c1">
                      
                      <td><b>Standar Deviasi</b></td>
-                     <td><?php echo number_format($strd_dev,3,',','.');  ?></td>  
+                     <td><?php echo number_format($strd_dev3,3,',','.');  ?></td>  
                   </tr>
                 </table>
 
@@ -318,47 +318,47 @@ $c = array("jenis_pkj","pengeluaran","status_tmpt");
                   </tr>
                   <?php
                   $no = 1;
-                  $mean2 = a('tidak layak') / total('tidak layak');
-                  foreach (numerik_tidak() as $key ) {
+                  $mean4 = a('tidak layak') / total('tidak layak');
+                  foreach (numerik_tidak() as $key4 ) {
                   ?>
                   <tr>
                     <td><?= $no++ ?></td>
-                    <td><?= $key[0] ?></td>
+                    <td><?= $key4[0] ?></td>
                     <?php 
-                    $selisih =  $key[0] - $mean2;
+                    $selisih4 =  $key4[0] - $mean4;
                     ?>      
-                    <td><?= $selisih; ?></td>        
+                    <td><?= $selisih4; ?></td>        
                     <?php 
-                    $pow =  pow($selisih,2);
-                    $var_pow[] =  pow($selisih,2);
+                    $pow4 =  pow($selisih4,2);
+                    $var_pow4[] =  pow($selisih4,2);
                     ?>    
-                    <td><?= $pow; ?></td>        
+                    <td><?= $pow4; ?></td>        
                   </tr>
                   <?php }?>
                   
                   <?php 
 
-                  $jumlah_pow = array_sum($var_pow); 
+                  $jumlah_pow4 = array_sum($var_pow4); 
                   
                   ?>
                   <tr style="background-color:#c1c1c1">
                      <td><b>Total</b></td>
                      <td><?php echo a('tidak layak');  ?></td>  
                      <td></td>
-                     <td><?php echo $jumlah_pow;  ?></td>  
+                     <td><?php echo $jumlah_pow4;  ?></td>  
                   </tr>
                   <tr style="background-color:#c1c1c1">
                      <td><b>Mean <br>(Jumlah Item / Jumlah Total )</b></td>
-                     <td><?php echo $mean2;  ?></td>  
+                     <td><?php echo $mean4;  ?></td>  
                        
                   </tr>
                   <?php
-                  $strd_dev = sqrt($jumlah_pow / (total('tidak layak')-1));
+                  $strd_dev4 = sqrt($jumlah_pow4 / (total('tidak layak')-1));
                   ?>
                   <tr style="background-color:#c1c1c1">
                      
                      <td><b>Standar Deviasi</b></td>
-                     <td><?php echo number_format($strd_dev,3,',','.');  ?></td>  
+                     <td><?php echo number_format($strd_dev4,3,',','.');  ?></td>  
                   </tr>
 
                   

@@ -149,6 +149,8 @@
                                                 <th>Pengeluaran</th>
                                                 <th>Tempat Tinggal</th>
                                                 <th>Label</th>
+                                                <th>Layak</th>
+                                                <th>Tidak Layak</th>
                                                 <th>Hasil Prediksi</th>
                                                 <th>Aksi</th>
                                             </tr>
@@ -158,7 +160,39 @@
                                             include "function.php";          
                                             $query_mysql = mysqli_query($host,"SELECT * FROM tb_klasifikasi")or die(mysqli_error());
                                             $no = 1;
-                                            while($data = mysqli_fetch_array($query_mysql)){    
+                                            $penghasilan_tampil = penghasilan_tampil_layak();
+                                            $penghasilan_tampil2 = penghasilan_tampil_tidak();
+                                            $penghasilan_numerik = penghasilan_sum_layak();
+                                            $penghasilan_numerik2 = penghasilan_sum_tidak();
+
+                                            $tampil = tampil_layak();//var_dump($tampil);
+                                            $tampil2 = tampil_tidak();
+                                            $numerik = sum_layak(); //var_dump($numerik);
+                                            $numerik2 = sum_tidak();
+                                            while($data = mysqli_fetch_array($query_mysql)){ 
+                                            
+                                            $prob_penghasilan_layak = 1 / sqrt(2*3.14*$penghasilan_numerik)*exp(-(($data['jml_phsl']-penghasilan_mean_layak())**2)/($penghasilan_numerik**2));
+                                            $prob_penghasilan_tidak = 1 / sqrt(2*3.14*$penghasilan_numerik2)*exp(-(($data['jml_phsl']-penghasilan_mean_tidak())**2)/($penghasilan_numerik2**2));
+                                            //var_dump($penghasilan_numerik);
+                                            //var_dump(penghasilan_mean_layak());
+                                            //var_dump(penghasilan_mean_tidak());
+                                            
+                                            $prob_art_layak = 1 / sqrt(2*3.14*$numerik)*exp(-(($data['jml_art']-mean_layak())**2)/($numerik**2));
+                                            $prob_art_tdk = 1 / sqrt(2*3.14*$numerik2)*exp(-(($data['jml_art']-mean_tidak())**2)/($numerik2**2));
+
+                                            $hasilLayak = (hitung('jenis_pkj',$data['jenis_pkj'],'Layak') / klasifikasi('Layak'))* ($prob_penghasilan_layak)
+                                            *($prob_art_layak)*(hitung('pengeluaran',$data['pengeluaran'],'Layak') / klasifikasi('Layak'))
+                                            * (hitung('status_tmpt',$data['status_tmpt'],'Layak') / klasifikasi('Layak'))*(klasifikasi("layak") / totalData());
+                                            
+                                            $hasilTdkLayak =  (hitung('jenis_pkj',$data['jenis_pkj'],'Tidak Layak') / klasifikasi('Tidak Layak')) * ($prob_penghasilan_tidak)
+                                            * ($prob_art_tdk)*(hitung('pengeluaran',$data['pengeluaran'],'Tidak Layak') / klasifikasi('Tidak Layak'))*
+                                            (hitung('status_tmpt',$data['status_tmpt'],'Tidak Layak') / klasifikasi('Tidak Layak'))*(klasifikasi("tidak layak") / totalData());
+                                            
+                                            if ($hasilLayak > $hasilTdkLayak) {
+                                                $hasil = 'LAYAK';
+                                            }else {
+                                                $hasil = 'TIDAK LAYAK';   
+                                            }
                                             ?>
                                             <tr>
                                                 <td> <?php echo $no++; ?></td>
@@ -169,7 +203,9 @@
                                                 <td> <?php echo $data['pengeluaran']; ?> </td>
                                                 <td> <?php echo $data['status_tmpt']; ?> </td>
                                                 <td> <?php echo $data['kelas_asli']; ?> </td>
-                                                <td> <?php echo $data['label_prediksi']; ?> </td>
+                                                <td> <?php echo $hasilLayak; ?> </td>
+                                                <td> <?php echo $hasilTdkLayak; ?> </td>
+                                                <td> <?php echo $hasil; ?> </td>
                                                 
                                                 
                                                 <td style="text-align:center;">

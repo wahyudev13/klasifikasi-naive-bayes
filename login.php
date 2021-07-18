@@ -16,7 +16,7 @@ if(isset($_SESSION['akses'])){
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
-           <a href="login.php"><img class="logo-login" style="width: 100%;" src="img/logo.png" alt="logo"></a>
+           <a href="login.php"><img class="logo-login" style="width: 100%;" src="img/logo3.png" alt="logo"></a>
 
         </div>
         <!-- /.login-logo -->

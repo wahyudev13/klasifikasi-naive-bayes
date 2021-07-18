@@ -186,6 +186,7 @@ include "function.php";
                           $penghasilan_numerik2 = penghasilan_sum_tidak();
                           $prob_penghasilan_layak = 1 / sqrt(2*3.14*$penghasilan_numerik)*exp(-(($penghasilan-penghasilan_mean_layak())**2)/($penghasilan_numerik**2));
                           $prob_penghasilan_tidak = 1 / sqrt(2*3.14*$penghasilan_numerik2)*exp(-(($penghasilan-penghasilan_mean_tidak())**2)/($penghasilan_numerik2**2));
+                          var_dump($penghasilan_numerik);
                           //var_dump(penghasilan_mean_layak());
                           //var_dump(penghasilan_mean_tidak());
                           $tampil = tampil_layak();//var_dump($tampil);
